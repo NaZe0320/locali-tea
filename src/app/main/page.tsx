@@ -1,103 +1,60 @@
-import Image from "next/image";
-
+// src/app/page.tsx
 export default function Home() {
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+    <div className="px-4 py-6">
+      {/* 차BTI 테스트 배너 */}
+      <div className="mb-6 rounded-xl overflow-hidden shadow-sm" style={{
+        background: 'linear-gradient(to right, #e8f5e9, #ffebee)'
+      }}>
+        <div className="p-6">
+          <h2 className="text-xl font-bold mb-2">나에게 맞는 차는?</h2>
+          <p className="text-sm mb-4">차BTI 테스트로 알아보는 나의 차 유형</p>
+          <button className="bg-white text-green-600 px-4 py-2 rounded-full font-medium text-sm shadow-sm">
+            테스트 시작하기
+          </button>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+      </div>
+      
+      {/* 시즌별 인기 차 관광지 */}
+      <section className="mb-6">
+        <div className="flex items-center justify-between mb-3">
+          <h2 className="text-lg font-bold">시즌별 인기 차 관광지</h2>
+          <button className="text-green-600 text-sm">더보기</button>
+        </div>
+        <div className="flex overflow-x-auto pb-2 -mx-4 px-4 space-x-4">
+          {/* 가로 스크롤 카드 */}
+          {[1, 2, 3, 4].map((item) => (
+            <div key={item} className="flex-shrink-0 w-64 rounded-lg shadow-sm overflow-hidden border border-gray-100">
+              <div className="h-32 bg-gray-100"></div>
+              <div className="p-3">
+                <span className="inline-block px-2 py-1 bg-green-50 text-green-800 text-xs rounded-full">녹차</span>
+                <h3 className="font-bold mt-2 mb-1">보성 녹차밭</h3>
+                <p className="text-xs text-gray-500">전라남도 보성군</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+      
+      {/* 지역별 특색 콘텐츠 */}
+      <section className="mb-6">
+        <div className="flex items-center justify-between mb-3">
+          <h2 className="text-lg font-bold">지역별 특색 차 콘텐츠</h2>
+          <button className="text-green-600 text-sm">더보기</button>
+        </div>
+        <div className="grid grid-cols-2 gap-3">
+          {/* 지역 카드 */}
+          {["전라도", "경상도", "강원도", "제주도"].map((region) => (
+            <div key={region} className="p-4 rounded-lg" style={{
+              background: 'linear-gradient(135deg, #e8f5e9 0%, #f1f8e9 100%)',
+              border: '1px solid rgba(0,0,0,0.05)'
+            }}>
+              <h3 className="font-bold text-sm">{region}</h3>
+              <p className="text-xs text-gray-600 mt-1">녹차의 고장</p>
+            </div>
+          ))}
+        </div>
+      </section>
     </div>
   );
-}
+}   
