@@ -1,0 +1,177 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    font-family: Pretendard, 'SF Pro Display', system-ui, sans-serif;
+  }
+  
+  body {
+    @apply bg-gray-50 text-dark-800 antialiased;
+  }
+  
+  h1 {
+    @apply text-heading-1;
+  }
+  
+  h2 {
+    @apply text-heading-2;
+  }
+  
+  h3 {
+    @apply text-heading-3;
+  }
+
+  /* 키보드 표시 감지를 위한 스타일 */
+  @media screen and (max-height: 450px) {
+    .footer-hide-on-keyboard {
+      display: none;
+    }
+  }
+}
+
+@layer components {
+  /* 버튼 스타일 */
+  .btn {
+    @apply inline-flex items-center justify-center px-4 py-2 rounded-lg font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2;
+  }
+  
+  .btn-primary {
+    @apply inline-flex items-center justify-center px-4 py-2 rounded-lg font-medium transition-all duration-200 bg-primary text-white hover:bg-primary-600 focus:ring-primary-500 focus:outline-none focus:ring-2 focus:ring-offset-2 shadow-button;
+  }
+  
+  .btn-secondary {
+    @apply inline-flex items-center justify-center px-4 py-2 rounded-lg font-medium transition-all duration-200 bg-secondary text-white hover:bg-secondary-600 focus:ring-secondary-500 focus:outline-none focus:ring-2 focus:ring-offset-2 shadow-button;
+  }
+  
+  .btn-outline {
+    @apply inline-flex items-center justify-center px-4 py-2 rounded-lg font-medium transition-all duration-200 bg-white text-dark-800 border border-gray-300 hover:bg-gray-50 focus:ring-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2;
+  }
+  
+  .btn-neutral {
+    @apply inline-flex items-center justify-center px-4 py-2 rounded-lg font-medium transition-all duration-200 bg-gray-100 text-dark-700 hover:bg-gray-200 focus:ring-gray-400 focus:outline-none focus:ring-2 focus:ring-offset-2;
+  }
+  
+  .btn-gradient {
+    @apply inline-flex items-center justify-center px-4 py-2 rounded-full font-medium transition-all duration-200 bg-action-gradient text-white hover:opacity-90 focus:ring-primary-500 focus:outline-none focus:ring-2 focus:ring-offset-2;
+  }
+
+  .btn-sm {
+    @apply px-3 py-1.5 text-sm;
+  }
+
+  .btn-lg {
+    @apply px-6 py-3 text-lg;
+  }
+
+  /* 태그 스타일 */
+  .tag {
+    @apply px-3 py-1 text-xs rounded-tag inline-flex items-center;
+  }
+  
+  .tag-green {
+    @apply tag bg-tea-green-light text-primary-700 border border-primary-100;
+  }
+  
+  .tag-black {
+    @apply tag bg-tea-black-light text-secondary-700 border border-secondary-100;
+  }
+  
+  .tag-flower {
+    @apply tag bg-tea-flower-light text-accent-700 border border-accent-100;
+  }
+  
+  .tag-fermented {
+    @apply tag bg-tea-fermented-light text-highlight-700 border border-highlight-100;
+  }
+
+  /* 배지 스타일 */
+  .badge {
+    @apply w-12 h-12 rounded-badge flex items-center justify-center;
+  }
+  
+  .badge-green {
+    @apply badge bg-tea-green-light border border-primary-100 text-primary-700;
+  }
+  
+  .badge-black {
+    @apply badge bg-tea-black-light border border-secondary-100 text-secondary-700;
+  }
+  
+  .badge-flower {
+    @apply badge bg-tea-flower-light border border-accent-100 text-accent-700;
+  }
+  
+  .badge-fermented {
+    @apply badge bg-tea-fermented-light border border-highlight-100 text-highlight-700;
+  }
+
+  /* 카드 스타일 */
+  .card {
+    @apply bg-white rounded-card shadow-card border border-gray-200 overflow-hidden transition-shadow duration-200 hover:shadow-elevated;
+  }
+  
+  .card-image {
+    @apply h-40 bg-gray-100;
+  }
+  
+  .card-content {
+    @apply p-4;
+  }
+  
+  .card-title {
+    @apply font-bold text-dark-800 mb-1;
+  }
+  
+  .card-location {
+    @apply text-sm text-gray-600 mb-2;
+  }
+  
+  .card-description {
+    @apply text-xs text-gray-500;
+  }
+
+  /* 알림 상태 스타일 */
+  .alert {
+    @apply flex items-center p-3 rounded-lg border mb-4;
+  }
+
+  .alert-success {
+    @apply alert bg-green-50 text-green-800 border-green-100;
+  }
+
+  .alert-warning {
+    @apply alert bg-yellow-50 text-yellow-800 border-yellow-200;
+  }
+
+  .alert-error {
+    @apply alert bg-red-50 text-red-800 border-red-100;
+  }
+
+  .alert-info {
+    @apply alert bg-blue-50 text-blue-800 border-blue-100;
+  }
+
+  /* 입력 필드 스타일 */
+  .input {
+    @apply w-full px-4 py-2 border border-gray-300 rounded-input text-gray-900 
+      focus:ring-2 focus:ring-primary focus:border-primary focus:outline-none
+      disabled:bg-gray-100 disabled:text-gray-500 disabled:cursor-not-allowed;
+  }
+
+  /* 애니메이션 */
+  .animate-fade-in {
+    @apply animate-fade-in;
+  }
+  
+  .animate-slide-up {
+    @apply animate-slide-up;
+  }
+}
+/* 키보드 표시 감지를 위한 스타일 */
+@media screen and (max-height: 450px) {
+    .footer-hide-on-keyboard {
+      display: none;
+    }
+  }
