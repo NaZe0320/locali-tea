@@ -11,7 +11,7 @@ export class TeaBtiService {
   async getQuestions(): Promise<TeaBtiQuestion[]> {
     // Mock API 호출 시뮬레이션
     await this.delay(500);
-    return getRandomQuestions(12);
+    return getRandomQuestions(20);
   }
 
   async getTeaTypes(): Promise<TeaType[]> {
