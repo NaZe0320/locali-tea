@@ -72,9 +72,9 @@ const TeaBtiTest: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col">
-      {/* 헤더 */}
-      <header className="bg-white border-b border-gray-200 px-4 py-3">
-        <div className="flex items-center justify-between">
+      {/* 고정 헤더 */}
+      <header className="sticky top-0 z-20 bg-white border-b border-gray-200 py-3">
+        <div className="flex items-center justify-between px-4">
           <button 
             onClick={() => router.back()}
             className="w-10 h-10 flex items-center justify-center rounded-full hover:bg-gray-100 transition-colors"
@@ -94,7 +94,7 @@ const TeaBtiTest: React.FC = () => {
         </div>
         
         {/* 프로그레스 바 */}
-        <div className="mt-3">
+        <div className="mt-3 px-4">
           <div className="w-full bg-gray-200 rounded-full h-2">
             <div 
               className="bg-brand-primary h-2 rounded-full transition-all duration-300 ease-out"
@@ -104,77 +104,75 @@ const TeaBtiTest: React.FC = () => {
         </div>
       </header>
 
-      {/* 메인 콘텐츠 */}
-      <main className="flex-1 flex flex-col">
-        {/* 질문 영역 */}
-        <div className="flex-1 px-6 py-8">
-          <div className="max-w-2xl mx-auto">
-            {/* 질문 텍스트 */}
-            <div className="mb-8">
-              <h2 className="text-xl font-bold text-gray-800 leading-relaxed mb-4">
-                Q{progress.current}. {currentQuestion.text}
-              </h2>
-            </div>
-
-            {/* 선택지 */}
-            <div className="space-y-3">
-              {currentQuestion.options.map((option) => {
-                const isSelected = currentAnswer?.optionId === option.id;
-                
-                return (
-                  <button
-                    key={option.id}
-                    onClick={() => handleOptionSelect(option.id)}
-                    className={`w-full p-4 text-left rounded-xl border-2 transition-all duration-200 ${
-                      isSelected
-                        ? 'border-brand-primary bg-brand-primary/5 shadow-md'
-                        : 'border-gray-200 bg-white hover:border-gray-300 hover:shadow-sm'
-                    }`}
-                  >
-                    <div className="flex items-start gap-3">
-                      <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center flex-shrink-0 mt-0.5 ${
-                        isSelected 
-                          ? 'border-brand-primary bg-brand-primary' 
-                          : 'border-gray-300'
-                      }`}>
-                        {isSelected && (
-                          <div className="w-3 h-3 bg-white rounded-full" />
-                        )}
-                      </div>
-                      <span className={`text-sm leading-relaxed ${
-                        isSelected ? 'text-gray-800 font-medium' : 'text-gray-700'
-                      }`}>
-                        {option.text}
-                      </span>
-                    </div>
-                  </button>
-                );
-              })}
-            </div>
-          </div>
+      {/* 고정 질문 영역 */}
+      <div className="sticky top-[88px] z-10 bg-gray-50 py-6 border-b border-gray-200">
+        <div className="text-center px-4">
+          <h2 className="text-xl font-bold text-gray-800 leading-relaxed">
+            Q{progress.current}. {currentQuestion.text}
+          </h2>
         </div>
+      </div>
 
-        {/* 하단 네비게이션 */}
-        <div className="bg-white border-t border-gray-200 px-6 py-4">
-          <div className="max-w-2xl mx-auto flex gap-3">
-            <button
-              onClick={handlePrevious}
-              disabled={!canGoBack}
-              className="flex-1 py-3 px-4 bg-gray-100 hover:bg-gray-200 disabled:bg-gray-50 disabled:text-gray-400 disabled:cursor-not-allowed text-gray-700 font-medium rounded-xl transition-colors"
-            >
-              이전
-            </button>
-            
-            <button
-              onClick={handleNext}
-              disabled={!currentAnswer}
-              className="flex-1 py-3 px-4 bg-brand-primary hover:bg-brand-primary/90 disabled:bg-gray-200 disabled:text-gray-400 disabled:cursor-not-allowed text-white font-medium rounded-xl transition-colors"
-            >
-              {isLastQuestion ? '결과 보기' : '다음'}
-            </button>
+      {/* 스크롤 가능한 선택지 영역 */}
+      <main className="flex-1 overflow-y-auto pb-20">
+        <div className="px-4 py-6">
+          <div className="space-y-3">
+            {currentQuestion.options.map((option) => {
+              const isSelected = currentAnswer?.optionId === option.id;
+              
+              return (
+                <button
+                  key={option.id}
+                  onClick={() => handleOptionSelect(option.id)}
+                  className={`w-full p-4 text-left rounded-xl border-2 transition-all duration-200 ${
+                    isSelected
+                      ? 'border-brand-primary bg-brand-primary/5 shadow-md'
+                      : 'border-gray-200 bg-white hover:border-gray-300 hover:shadow-sm'
+                  }`}
+                >
+                  <div className="flex items-start gap-3">
+                    <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center flex-shrink-0 mt-0.5 ${
+                      isSelected 
+                        ? 'border-brand-primary bg-brand-primary' 
+                        : 'border-gray-300'
+                    }`}>
+                      {isSelected && (
+                        <div className="w-3 h-3 bg-white rounded-full" />
+                      )}
+                    </div>
+                    <span className={`text-sm leading-relaxed ${
+                      isSelected ? 'text-gray-800 font-medium' : 'text-gray-700'
+                    }`}>
+                      {option.text}
+                    </span>
+                  </div>
+                </button>
+              );
+            })}
           </div>
         </div>
       </main>
+
+      {/* 고정 하단 네비게이션 */}
+      <div className="fixed bottom-0 left-0 right-0 z-20 bg-white border-t border-gray-200 py-4">
+        <div className="flex gap-3 px-4">
+          <button
+            onClick={handlePrevious}
+            disabled={!canGoBack}
+            className="flex-1 py-3 px-4 bg-gray-100 hover:bg-gray-200 disabled:bg-gray-50 disabled:text-gray-400 disabled:cursor-not-allowed text-gray-700 font-medium rounded-xl transition-colors"
+          >
+            이전
+          </button>
+          
+          <button
+            onClick={handleNext}
+            disabled={!currentAnswer}
+            className="flex-1 py-3 px-4 bg-brand-primary hover:bg-brand-primary/90 disabled:bg-gray-200 disabled:text-gray-400 disabled:cursor-not-allowed text-white font-medium rounded-xl transition-colors"
+          >
+            {isLastQuestion ? '결과 보기' : '다음'}
+          </button>
+        </div>
+      </div>
     </div>
   );
 };

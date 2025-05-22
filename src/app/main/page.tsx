@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import Link from 'next/link';
 import { TouristSpot } from '../../types/tourist-spot';
 import { createTouristSpotUseCases } from '../../usecases/tourist-spots';
@@ -11,8 +11,8 @@ export default function Main() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  // UseCase 인스턴스 생성
-  const { getPopularTouristSpotsUseCase } = createTouristSpotUseCases();
+  // UseCase 인스턴스를 메모이제이션하여 매번 새로 생성되지 않도록 함
+  const useCases = useMemo(() => createTouristSpotUseCases(), []);
 
   // 인기 관광지 데이터 로드
   useEffect(() => {
@@ -21,7 +21,7 @@ export default function Main() {
       setError(null);
       
       try {
-        const spots = await getPopularTouristSpotsUseCase.execute(6);
+        const spots = await useCases.getPopularTouristSpotsUseCase.execute(6);
         setPopularSpots(spots);
       } catch (err) {
         setError(err instanceof Error ? err.message : '데이터를 불러오는데 실패했습니다.');
@@ -32,13 +32,13 @@ export default function Main() {
     };
 
     loadPopularSpots();
-  }, [getPopularTouristSpotsUseCase]);
+  }, []); // 빈 배열로 변경하여 컴포넌트 마운트 시에만 한 번 실행
 
   return (
     <div className="px-4 py-6">
       {/* 차BTI 테스트 배너 */}
       <Link href="/tea-bti">
-        <div className="mb-6 rounded-xl overflow-hidden shadow-sm" style={{
+        <div className="mb-6 rounded-xl overflow-hidden shadow-sm cursor-pointer hover:shadow-md transition-shadow" style={{
           background: 'linear-gradient(to right, #e8f5e9, #ffebee)'
         }}>
           <div className="p-6">
@@ -50,6 +50,7 @@ export default function Main() {
           </div>
         </div>
       </Link>
+
       {/* 시즌별 인기 차 관광지 */}
       <section className="mb-6">
         <div className="flex items-center justify-between mb-3">
@@ -87,7 +88,7 @@ export default function Main() {
         
         {/* 관광지 카드 리스트 */}
         {!loading && !error && popularSpots.length > 0 && (
-          <div className="flex overflow-x-auto pb-2 -mx-4 px-4 space-x-4" >
+          <div className="flex overflow-x-auto pb-2 -mx-4 px-4 space-x-4">
             {popularSpots.map((spot) => (
               <TouristSpotCard 
                 key={spot.id} 
