@@ -127,26 +127,15 @@ export class TeaBtiService {
     lifestyle: string[];
     travelStyle: string;
   } {
-    // 답변 패턴을 분석하여 성격 특성 도출
-    const personalityAnswers = answers.filter(answer => {
-      const question = this.questions.find(q => q.id === answer.questionId);
-      return question?.category === 'personality';
-    });
-
-    const travelAnswers = answers.filter(answer => {
-      const question = this.questions.find(q => q.id === answer.questionId);
-      return question?.category === 'travel';
-    });
-
     return {
       traits: mainType.characteristics,
       values: ['자연 친화적', '전통 문화 존중', '건강한 라이프스타일'],
       lifestyle: ['차분한 일상', '여유로운 시간', '깊이 있는 경험'],
-      travelStyle: this.analyzeTravelStyle(travelAnswers)
+      travelStyle: this.analyzeTravelStyle()
     };
   }
 
-  private analyzeTravelStyle(travelAnswers: TeaBtiAnswer[]): string {
+  private analyzeTravelStyle(): string {
     // 여행 관련 답변을 분석하여 여행 스타일 결정
     const styles = ['전통문화형', '자연체험형', '트렌드세터형', '차문화형', '힐링형'];
     return styles[Math.floor(Math.random() * styles.length)];

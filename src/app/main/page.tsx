@@ -32,7 +32,7 @@ export default function Main() {
     };
 
     loadPopularSpots();
-  }, []);
+  }, [getPopularTouristSpotsUseCase]);
 
   return (
     <div className="px-4 py-6">

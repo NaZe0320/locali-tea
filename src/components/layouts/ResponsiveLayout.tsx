@@ -7,13 +7,11 @@ import { useIsDesktop } from '../../hooks/useMediaQuery';
 
 interface ResponsiveLayoutProps {
   children: React.ReactNode;
-  hideNav?: boolean;
   header?: React.ReactNode;
 }
 
 export const ResponsiveLayout: React.FC<ResponsiveLayoutProps> = ({
   children,
-  hideNav,
   header,
 }) => {
   const isDesktop = useIsDesktop();

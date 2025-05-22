@@ -4,7 +4,7 @@ import ResponsiveLayout from '../../../components/layouts/ResponsiveLayout';
 
 export default function TeaBtiTestPage() {
   return (
-    <ResponsiveLayout hideNav>
+    <ResponsiveLayout>
       <TeaBtiTest />
     </ResponsiveLayout>
   );

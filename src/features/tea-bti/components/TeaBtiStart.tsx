@@ -73,7 +73,7 @@ const TeaBtiStart: React.FC = () => {
         <div className="text-center mb-8">
           <h2 className="text-2xl font-bold text-gray-800 mb-2">나의 차 성향 테스트</h2>
           <p className="text-gray-600 text-sm leading-relaxed">
-            12가지 질문으로 알아보는<br />
+            20가지 질문으로 알아보는<br />
             나와 어울리는 차와 여행지
           </p>
         </div>

@@ -38,7 +38,7 @@ export default function TouristSpotsListPage() {
     };
 
     loadSpots();
-  }, []);
+  }, [getTouristSpotsUseCase]);
 
   return (
     <div className="min-h-screen bg-gray-50">

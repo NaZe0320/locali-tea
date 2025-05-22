@@ -3,7 +3,6 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import ResponsiveLayout from '../components/layouts/ResponsiveLayout';
-import { Button } from '../components/ui/Button';
 
 export default function Home() {
   const [isMobile, setIsMobile] = useState(false);

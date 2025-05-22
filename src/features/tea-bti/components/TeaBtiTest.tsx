@@ -9,7 +9,6 @@ import {
   useCurrentQuestion, 
   useProgress, 
   useCanGoBack, 
-  useCanGoNext, 
   useIsLastQuestion,
   useCurrentAnswer
 } from '../store/teaBitStore';
@@ -27,7 +26,6 @@ const TeaBtiTest: React.FC = () => {
   const currentQuestion = useCurrentQuestion();
   const progress = useProgress();
   const canGoBack = useCanGoBack();
-  const canGoNext = useCanGoNext();
   const isLastQuestion = useIsLastQuestion();
   const currentAnswer = useCurrentAnswer();
 

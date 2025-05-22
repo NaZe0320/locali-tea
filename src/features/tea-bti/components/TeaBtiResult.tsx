@@ -92,7 +92,7 @@ const TeaBtiResult: React.FC = () => {
             <div className="mb-6">
               <h3 className="text-lg font-semibold text-gray-800 mb-3">당신은 이런 사람이에요</h3>
               <div className="space-y-2">
-                {result.mainType.characteristics.map((trait, index) => (
+                {result.mainType.characteristics.map((trait: string, index: number) => (
                   <div key={index} className="flex items-start gap-2">
                     <div className="w-4 h-4 bg-brand-primary/20 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
                       <div className="w-2 h-2 bg-brand-primary rounded-full" />

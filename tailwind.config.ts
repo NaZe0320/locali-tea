@@ -92,7 +92,7 @@ const config: Config = {
         'gradient-action-secondary': 'linear-gradient(to right, #e57373, #ef9a9a)',
         
         // 카드용 그라데이션
-        'gradient-card-green': 'linear-gradient(to br, #D1FAE5, #A7F3D0)',
+        'gradient-card-green': 'linear-gradient(to bottom right, #D1FAE5, #A7F3D0)',
       },
       
       // 폰트 패밀리
@@ -128,6 +128,9 @@ const config: Config = {
       maxWidth: {
         'tea-container': '1200px',
         'tea-content': '800px',
+        'mobile': '480px',
+        'tablet': '768px',
+        'desktop': '1200px',
       },
       
       // 커스텀 간격

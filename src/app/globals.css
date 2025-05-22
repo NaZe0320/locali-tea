@@ -1,3 +1,82 @@
 ﻿@tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* 기본 폰트 설정 */
+body {
+  font-family: 'Pretendard', 'SF Pro Display', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+/* 컴포넌트 레이어 */
+@layer components {
+  /* 버튼 스타일 */
+  .btn-primary {
+    @apply px-4 py-2 bg-brand-primary text-white rounded-lg font-medium hover:opacity-90 transition-opacity;
+  }
+  
+  .btn-secondary {
+    @apply px-4 py-2 bg-brand-secondary text-white rounded-lg font-medium hover:opacity-90 transition-opacity;
+  }
+  
+  .btn-outline {
+    @apply px-4 py-2 bg-white text-gray-800 border border-gray-300 rounded-lg font-medium hover:bg-gray-50 transition-colors;
+  }
+  
+  .btn-neutral {
+    @apply px-4 py-2 bg-gray-100 text-gray-700 rounded-lg font-medium hover:bg-gray-200 transition-colors;
+  }
+  
+  .btn-gradient {
+    @apply px-4 py-2 bg-gradient-action text-white rounded-full font-medium hover:opacity-90 transition-opacity;
+  }
+  
+  /* 카드 스타일 */
+  .card {
+    @apply bg-white rounded-lg shadow-tea-card border border-gray-200 p-4;
+  }
+  
+  /* 태그 스타일 */
+  .tag {
+    @apply px-3 py-1 text-xs rounded-full inline-flex items-center;
+  }
+  
+  .tag-green {
+    @apply bg-tea-green-50 text-tea-green-800 border border-tea-green-100;
+  }
+}
+
+/* 유틸리티 레이어 */
+@layer utilities {
+  /* 텍스트 라인 제한 */
+  .line-clamp-1 {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+  }
+  
+  .line-clamp-2 {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+  }
+  
+  /* 반응형 컨테이너 */
+  .max-w-mobile {
+    max-width: 480px;
+  }
+  
+  .max-w-tablet {
+    max-width: 768px;
+  }
+  
+  .max-w-desktop {
+    max-width: 1200px;
+  }
+  
+  /* 기본 색상 */
+  .text-primary {
+    color: #68A66F;
+  }
+}

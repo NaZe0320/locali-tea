@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import { TouristSpot, TeaType } from '../../../../types/tourist-spot';
 import { createTouristSpotUseCases } from '../../../../usecases/tourist-spots';
+import Image from 'next/image';
 
 // 차 종류별 색상 및 이름 유틸리티
 const getTeaTypeStyle = (teaType: TeaType) => {
@@ -62,7 +63,7 @@ export default function TouristSpotDetailPage() {
     };
 
     loadSpotDetail();
-  }, [spotId]);
+  }, [spotId, getTouristSpotByIdUseCase]);
 
   // 로딩 상태
   if (loading) {
@@ -108,10 +109,12 @@ export default function TouristSpotDetailPage() {
       {/* 헤더 이미지 및 네비게이션 */}
       <div className="relative h-64 bg-gray-200">
         {hasImage ? (
-          <img 
+          <Image 
             src={spot.images[0]} 
             alt={spot.name}
             className="w-full h-full object-cover"
+            width={1000}
+            height={500}
           />
         ) : (
           <div className="w-full h-full flex flex-col items-center justify-center">

@@ -254,7 +254,7 @@ const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
 // Mock API 서비스
 export class MockTouristSpotService {
-  async getTouristSpots(filters?: any): Promise<TouristSpot[]> {
+  async getTouristSpots(): Promise<TouristSpot[]> {
     await delay(800); // API 호출 시뮬레이션
     return mockTouristSpots;
   }

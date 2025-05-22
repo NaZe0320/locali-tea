@@ -2,8 +2,8 @@
 
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import { TeaBtiStore, TeaBtiSession, TeaBtiQuestion, TeaType, TravelDestination, TeaBtiAnswer, TeaBtiResult } from '../../../types/teabti';
 import { TeaBtiService } from '../../../services/teaBtiService';
+import { TeaBtiSession, TeaBtiStore } from '@/types/teabti';
 
 const teaBtiService = new TeaBtiService();
 
@@ -157,29 +157,29 @@ export const useTeaBtiStore = create<TeaBtiStore>()(
               
             case 'kakao':
               // Kakao 공유는 실제 구현 시 Kakao SDK 필요
-              if (typeof window !== 'undefined' && (window as any).Kakao) {
-                (window as any).Kakao.Share.sendDefault({
-                  objectType: 'feed',
-                  content: {
-                    title: shareData.title,
-                    description: shareData.description,
-                    imageUrl: 'https://locali-tea.com/images/og-image.png',
-                    link: {
-                      mobileWebUrl: 'https://locali-tea.com',
-                      webUrl: 'https://locali-tea.com'
-                    }
-                  },
-                  buttons: [{
-                    title: '나도 테스트하기',
-                    link: {
-                      mobileWebUrl: 'https://locali-tea.com/tea-bti',
-                      webUrl: 'https://locali-tea.com/tea-bti'
-                    }
-                  }]
-                });
-              } else {
-                alert('카카오 공유 기능을 사용할 수 없습니다.');
-              }
+            //   if (typeof window !== 'undefined' && (window as any).Kakao) {
+            //     (window as any).Kakao.Share.sendDefault({
+            //       objectType: 'feed',
+            //       content: {
+            //         title: shareData.title,
+            //         description: shareData.description,
+            //         imageUrl: 'https://locali-tea.com/images/og-image.png',
+            //         link: {
+            //           mobileWebUrl: 'https://locali-tea.com',
+            //           webUrl: 'https://locali-tea.com'
+            //         }
+            //       },
+            //       buttons: [{
+            //         title: '나도 테스트하기',
+            //         link: {
+            //           mobileWebUrl: 'https://locali-tea.com/tea-bti',
+            //           webUrl: 'https://locali-tea.com/tea-bti'
+            //         }
+            //       }]
+            //     });
+            //   } else {
+            //     alert('카카오 공유 기능을 사용할 수 없습니다.');
+            //   }
               break;
           }
         } catch (error) {
@@ -226,7 +226,7 @@ export const useCanGoNext = () => {
   if (!session || !questions.length) return false;
   
   const currentQuestion = questions[session.currentQuestionIndex];
-  const hasAnswer = session.answers.some(a => a.questionId === currentQuestion?.id);
+  const hasAnswer = session.answers.some((a) => a.questionId === currentQuestion?.id);
   
   return hasAnswer && session.currentQuestionIndex < questions.length - 1;
 };
@@ -242,5 +242,5 @@ export const useCurrentAnswer = () => {
   if (!session || !questions.length) return null;
   
   const currentQuestion = questions[session.currentQuestionIndex];
-  return session.answers.find(a => a.questionId === currentQuestion?.id);
+  return session.answers.find((a) => a.questionId === currentQuestion?.id);
 };

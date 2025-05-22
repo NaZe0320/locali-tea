@@ -6,7 +6,10 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "deploy": "vercel",
+    "deploy:prod": "vercel --prod",
+    "preview": "vercel dev"
   },
   "dependencies": {
     "autoprefixer": "^10.4.21",

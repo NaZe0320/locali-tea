@@ -45,7 +45,7 @@ export const TouristSpotCard: React.FC<TouristSpotCardProps> = ({
         <div className="h-32 bg-gray-100 relative overflow-hidden">
           {hasImage ? (
             <>
-              <img 
+              <Image 
                 src={spot.images[0]} 
                 alt={spot.name}
                 className="w-full h-full object-cover"

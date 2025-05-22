@@ -1041,7 +1041,6 @@ export const mockQuestions: TeaBtiQuestion[] = [
         }
       ]
     },
-    // 계속해서 나머지 10개 질문 추가...
     {
       id: 'q11',
       text: '당신의 체질은 어떤 편인가요?',
@@ -1156,7 +1155,6 @@ export const mockQuestions: TeaBtiQuestion[] = [
         }
       ]
     },
-    // 나머지 질문들을 계속 추가 (q13-q20)...
     {
       id: 'q13',
       text: '건강을 위해 가장 신경 쓰는 부분은?',

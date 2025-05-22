@@ -9,9 +9,9 @@ export class GetTouristSpotsUseCase {
     this.touristSpotService = touristSpotService;
   }
 
-  async execute(filters?: any): Promise<TouristSpot[]> {
+  async execute(): Promise<TouristSpot[]> {
     try {
-      const spots = await this.touristSpotService.getTouristSpots(filters);
+      const spots = await this.touristSpotService.getTouristSpots();
       return spots;
     } catch (error) {
       console.error('Failed to fetch tourist spots:', error);
