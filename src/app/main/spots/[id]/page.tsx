@@ -36,6 +36,8 @@ export default function TouristSpotDetailPage() {
   const [spot, setSpot] = useState<TouristSpot | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [activeTab, setActiveTab] = useState('정보');
+  const [isLiked, setIsLiked] = useState(false);
 
   // UseCase 인스턴스 생성
   const { getTouristSpotByIdUseCase } = createTouristSpotUseCases();
@@ -50,8 +52,6 @@ export default function TouristSpotDetailPage() {
       
       try {
         const spotData = await getTouristSpotByIdUseCase.execute(spotId);
-        // 이미지를 빈 배열로 설정하여 이미지가 없도록 함
-        spotData.images = [];
         setSpot(spotData);
       } catch (err) {
         setError(err instanceof Error ? err.message : '관광지 정보를 불러오는데 실패했습니다.');
@@ -68,23 +68,14 @@ export default function TouristSpotDetailPage() {
   if (loading) {
     return (
       <div className="min-h-screen bg-gray-50">
-        {/* 헤더 스켈레톤 */}
-        <div className="sticky top-0 bg-white border-b border-gray-200 px-4 py-3">
-          <div className="flex items-center">
-            <div className="w-6 h-6 bg-gray-200 rounded animate-pulse mr-3"></div>
-            <div className="w-32 h-5 bg-gray-200 rounded animate-pulse"></div>
-          </div>
-        </div>
-        
-        {/* 콘텐츠 스켈레톤 */}
+        <div className="w-full h-64 bg-gray-200 animate-pulse"></div>
         <div className="p-4">
-          <div className="w-full h-48 bg-gray-200 rounded-lg animate-pulse mb-4"></div>
           <div className="w-3/4 h-6 bg-gray-200 rounded animate-pulse mb-2"></div>
           <div className="w-1/2 h-4 bg-gray-200 rounded animate-pulse mb-4"></div>
-          <div className="space-y-2">
-            <div className="w-full h-4 bg-gray-200 rounded animate-pulse"></div>
-            <div className="w-5/6 h-4 bg-gray-200 rounded animate-pulse"></div>
-            <div className="w-4/5 h-4 bg-gray-200 rounded animate-pulse"></div>
+          <div className="space-y-4">
+            {[1, 2, 3].map(i => (
+              <div key={i} className="w-full h-20 bg-gray-200 rounded animate-pulse"></div>
+            ))}
           </div>
         </div>
       </div>
@@ -94,34 +85,16 @@ export default function TouristSpotDetailPage() {
   // 에러 상태
   if (error || !spot) {
     return (
-      <div className="min-h-screen bg-gray-50">
-        {/* 헤더 */}
-        <div className="sticky top-0 bg-white border-b border-gray-200 px-4 py-3">
-          <div className="flex items-center">
-            <button 
-              onClick={() => router.back()}
-              className="mr-3 p-1 hover:bg-gray-100 rounded-full transition-colors"
-            >
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-              </svg>
-            </button>
-            <h1 className="text-lg font-semibold">오류</h1>
-          </div>
-        </div>
-        
-        {/* 에러 메시지 */}
-        <div className="flex items-center justify-center min-h-96">
-          <div className="text-center">
-            <div className="text-4xl mb-4">😕</div>
-            <p className="text-gray-600 mb-4">{error || '관광지를 찾을 수 없습니다.'}</p>
-            <button 
-              onClick={() => router.back()}
-              className="bg-brand-primary text-white px-4 py-2 rounded-lg hover:bg-green-600 transition-colors"
-            >
-              돌아가기
-            </button>
-          </div>
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center">
+          <div className="text-4xl mb-4">😕</div>
+          <p className="text-gray-600 mb-4">{error || '관광지를 찾을 수 없습니다.'}</p>
+          <button 
+            onClick={() => router.back()}
+            className="bg-brand-primary text-white px-4 py-2 rounded-lg hover:bg-green-600 transition-colors"
+          >
+            돌아가기
+          </button>
         </div>
       </div>
     );
@@ -132,23 +105,8 @@ export default function TouristSpotDetailPage() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* 헤더 */}
-      <div className="sticky top-0 bg-white border-b border-gray-200 px-4 py-3 z-10">
-        <div className="flex items-center">
-          <button 
-            onClick={() => router.back()}
-            className="mr-3 p-1 hover:bg-gray-100 rounded-full transition-colors"
-          >
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-            </svg>
-          </button>
-          <h1 className="text-lg font-semibold text-brand-dark">{spot.name}</h1>
-        </div>
-      </div>
-
-      {/* 메인 이미지 */}
-      <div className="relative h-64 bg-gray-100">
+      {/* 헤더 이미지 및 네비게이션 */}
+      <div className="relative h-64 bg-gray-200">
         {hasImage ? (
           <img 
             src={spot.images[0]} 
@@ -163,140 +121,222 @@ export default function TouristSpotDetailPage() {
             </h3>
           </div>
         )}
-        
-        {/* 평점 배지 */}
-        <div className="absolute top-4 right-4 bg-white bg-opacity-90 rounded-full px-3 py-1 text-sm font-medium">
-          ⭐ {spot.rating} ({spot.reviewCount.toLocaleString()})
+        {/* 상단 네비게이션 오버레이 */}
+        <div className="absolute top-0 left-0 right-0 flex items-center justify-between p-4">
+          <button 
+            onClick={() => router.back()}
+            className="w-10 h-10 bg-white bg-opacity-20 backdrop-blur-sm rounded-full flex items-center justify-center text-white"
+          >
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+            </svg>
+          </button>
+          <div className="flex space-x-2">
+            <button 
+              onClick={() => setIsLiked(!isLiked)}
+              className="w-10 h-10 bg-white bg-opacity-20 backdrop-blur-sm rounded-full flex items-center justify-center"
+            >
+              <svg className={`w-6 h-6 ${isLiked ? 'text-red-500' : 'text-white'}`} fill={isLiked ? 'currentColor' : 'none'} stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+              </svg>
+            </button>
+            <button className="w-10 h-10 bg-white bg-opacity-20 backdrop-blur-sm rounded-full flex items-center justify-center text-white">
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z" />
+              </svg>
+            </button>
+          </div>
         </div>
-      </div>
 
-      {/* 콘텐츠 */}
-      <div className="p-4">
-        {/* 기본 정보 */}
-        <div className="bg-white rounded-lg p-4 shadow-tea-card mb-4">
-          {/* 태그들 */}
-          <div className="mb-3 flex flex-wrap gap-2">
-            <span className={`px-3 py-1 text-sm rounded-full border ${getTeaTypeStyle(spot.teaType)}`}>
+        {/* 제목 및 위치 오버레이 */}
+        <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-4">
+          <div className="flex items-start space-x-2 mb-2">
+            <span className={`inline-block px-2 py-1 text-xs rounded-full border ${getTeaTypeStyle(spot.teaType)}`}>
               {getTeaTypeName(spot.teaType)}
             </span>
-            {spot.tags.map((tag, index) => (
-              <span key={index} className="px-3 py-1 bg-gray-50 text-gray-700 text-sm rounded-full border border-gray-100">
-                {tag}
-              </span>
-            ))}
+            <span className="inline-block px-2 py-1 bg-gray-50 text-gray-700 text-xs rounded-full border border-gray-100">
+              무장애
+            </span>
           </div>
-
-          {/* 관광지 이름 */}
-          <h2 className="text-xl font-bold text-brand-dark mb-2">{spot.name}</h2>
-          
-          {/* 위치 정보 */}
-          <div className="flex items-center mb-3 text-gray-600">
+          <h1 className="text-2xl font-bold text-white mb-1">{spot.name}</h1>
+          <div className="flex items-center text-white text-sm">
             <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
             </svg>
-            <span className="text-sm">{spot.location.address}</span>
+            <span>{spot.location.province} {spot.location.city}</span>
           </div>
+        </div>
+      </div>
 
-          {/* 설명 */}
-          <p className="text-gray-700 leading-relaxed mb-4">{spot.description}</p>
+      {/* 탭 메뉴 */}
+      <div className="bg-white border-b border-gray-200">
+        <div className="flex">
+          {['정보', '리뷰', '주변'].map((tab) => (
+            <button
+              key={tab}
+              onClick={() => setActiveTab(tab)}
+              className={`flex-1 py-3 text-center font-medium ${
+                activeTab === tab 
+                ? 'text-brand-primary border-b-2 border-brand-primary' 
+                : 'text-gray-500'
+              }`}
+            >
+              {tab}
+            </button>
+          ))}
+        </div>
+      </div>
 
-          {/* 가격 정보 */}
-          {spot.priceRange && (
-            <div className="flex items-center justify-between border-t border-gray-100 pt-3">
-              <span className="text-gray-600">체험 가격</span>
-              <span className="font-semibold text-brand-primary">
-                {spot.priceRange.min.toLocaleString()}원 ~ {spot.priceRange.max.toLocaleString()}원
-              </span>
+      {/* 콘텐츠 */}
+      <div className="p-4 space-y-6">
+        {/* 무장애 정보 */}
+        <div className="bg-white rounded-lg p-4 shadow-sm">
+          <h3 className="font-bold text-lg mb-4">무장애 정보</h3>
+          <div className="space-y-4">
+            <div className="flex items-center">
+              <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center mr-3">
+                <span className="text-blue-600 text-xs font-bold">0</span>
+              </div>
+              <div>
+                <h4 className="font-medium">휠체어 접근성</h4>
+                <p className="text-sm text-gray-600">주요 관람로 휠체어 접근 가능, 경사로 설치</p>
+              </div>
             </div>
-          )}
+            
+            <div className="flex items-center">
+              <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center mr-3">
+                <span className="text-blue-600 text-xs font-bold">0</span>
+              </div>
+              <div>
+                <h4 className="font-medium">장애인 화장실</h4>
+                <p className="text-sm text-gray-600">방문자 센터와 주차장 근처에 위치</p>
+              </div>
+            </div>
+
+            <div className="flex items-center">
+              <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center mr-3">
+                <span className="text-blue-600 text-xs font-bold">0</span>
+              </div>
+              <div>
+                <h4 className="font-medium">장애인 주차구역</h4>
+                <p className="text-sm text-gray-600">주차장 내 장애인 전용 주차구역 5면 확보</p>
+              </div>
+            </div>
+
+            <div className="flex items-center">
+              <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center mr-3">
+                <span className="text-blue-600 text-xs font-bold">0</span>
+              </div>
+              <div>
+                <h4 className="font-medium">보조 서비스</h4>
+                <p className="text-sm text-gray-600">휠체어 대여 가능, 안내원 동반 출입 가능</p>
+              </div>
+            </div>
+          </div>
         </div>
 
-        {/* 운영 정보 */}
-        {spot.operatingHours && (
-          <div className="bg-white rounded-lg p-4 shadow-tea-card mb-4">
-            <h3 className="font-bold text-brand-dark mb-3">운영 정보</h3>
-            <div className="space-y-2 text-sm">
-              <div className="flex justify-between">
-                <span className="text-gray-600">운영시간</span>
-                <span>{spot.operatingHours.open} - {spot.operatingHours.close}</span>
+        {/* 획득 가능 배지 */}
+        <div className="bg-white rounded-lg p-4 shadow-sm">
+          <h3 className="font-bold text-lg mb-4">획득 가능 배지</h3>
+          <div className="flex justify-around">
+            <div className="text-center">
+              <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mb-2 mx-auto">
+                <span className="text-2xl">🍵</span>
               </div>
-              {spot.operatingHours.closedDays && (
-                <div className="flex justify-between">
-                  <span className="text-gray-600">휴무일</span>
-                  <span>{spot.operatingHours.closedDays.join(', ')}</span>
-                </div>
-              )}
-              {spot.contact?.phone && (
-                <div className="flex justify-between">
-                  <span className="text-gray-600">전화번호</span>
-                  <a href={`tel:${spot.contact.phone}`} className="text-brand-primary hover:underline">
-                    {spot.contact.phone}
-                  </a>
-                </div>
-              )}
+              <p className="text-sm font-medium">보성 녹차</p>
+              <p className="text-xs text-gray-500">2/3 완료</p>
+            </div>
+            
+            <div className="text-center">
+              <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mb-2 mx-auto">
+                <span className="text-2xl">🌿</span>
+              </div>
+              <p className="text-sm font-medium">녹차 탐방대</p>
+              <p className="text-xs text-gray-500">1/3 완료</p>
+            </div>
+            
+            <div className="text-center">
+              <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mb-2 mx-auto">
+                <span className="text-2xl">♿</span>
+              </div>
+              <p className="text-sm font-medium">무장애 티투어</p>
+              <p className="text-xs text-gray-500">전체증</p>
             </div>
           </div>
-        )}
+        </div>
 
-        {/* 시설 정보 */}
-        {spot.features.length > 0 && (
-          <div className="bg-white rounded-lg p-4 shadow-tea-card mb-4">
-            <h3 className="font-bold text-brand-dark mb-3">시설 정보</h3>
-            <div className="grid grid-cols-2 gap-3">
-              {spot.features.map((feature) => (
-                <div key={feature.id} className="flex items-center">
-                  <span className="text-lg mr-2">{feature.icon}</span>
-                  <span className="text-sm text-gray-700">{feature.name}</span>
-                </div>
-              ))}
-            </div>
+        {/* 찾아오는 길 */}
+        <div className="bg-white rounded-lg p-4 shadow-sm">
+          <h3 className="font-bold text-lg mb-4">찾아오는 길</h3>
+          
+          {/* 지도 영역 */}
+          <div className="w-full h-40 bg-gray-200 rounded-lg mb-4 flex items-center justify-center">
+            <span className="text-gray-500">지도 영역</span>
           </div>
-        )}
+          
+          <div className="space-y-2">
+            <p className="font-medium">{spot.location.address}</p>
+            <p className="text-sm text-gray-600">대중교통 이용 시</p>
+            <p className="text-xs text-gray-500">
+              보성시외버스터미널에서 군내버스 이용 (약 15분 소요)
+            </p>
+          </div>
+          
+          {/* 무료 관람 안내 */}
+          <div className="mt-4 p-3 bg-blue-50 rounded-lg border border-blue-200">
+            <h4 className="font-medium text-blue-800 mb-1">무료 관람 안내</h4>
+            <p className="text-sm text-blue-700">
+              월화수 힘들 가능 무료베자 운영 (하루 3회, 09:00, 13:00, 16:00)
+            </p>
+            <p className="text-sm text-blue-700">
+              월화수 이용 가능 홈페이지 예약: 061-850-5200
+            </p>
+          </div>
+        </div>
 
-        {/* 체험 프로그램 */}
-        {spot.activities.length > 0 && (
-          <div className="bg-white rounded-lg p-4 shadow-tea-card mb-4">
-            <h3 className="font-bold text-brand-dark mb-3">체험 프로그램</h3>
-            <div className="space-y-3">
-              {spot.activities.map((activity) => (
-                <div key={activity.id} className="border border-gray-100 rounded-lg p-3">
-                  <div className="flex items-center justify-between mb-2">
-                    <h4 className="font-medium text-brand-dark">{activity.name}</h4>
-                    {activity.price && (
-                      <span className="text-brand-primary font-medium">
-                        {activity.price.toLocaleString()}원
-                      </span>
-                    )}
-                  </div>
-                  <p className="text-sm text-gray-600 mb-2">{activity.description}</p>
-                  <span className="text-xs text-gray-500">소요시간: {activity.duration}분</span>
-                </div>
-              ))}
+        {/* 상세 정보 */}
+        <div className="bg-white rounded-lg p-4 shadow-sm">
+          <h3 className="font-bold text-lg mb-4">상세 정보</h3>
+          <div className="space-y-3">
+            <div className="flex justify-between">
+              <span className="text-gray-600">운영시간</span>
+              <span className="text-right">
+                {spot.operatingHours?.open} - {spot.operatingHours?.close}
+              </span>
             </div>
+            
+            <div className="flex justify-between">
+              <span className="text-gray-600">입장료</span>
+              <span className="text-right">무료</span>
+            </div>
+
+            <div className="flex justify-between">
+              <span className="text-gray-600">주차장</span>
+              <span className="text-right">무료 (승용차 200대)</span>
+            </div>
+
+            {spot.contact?.phone && (
+              <div className="flex justify-between">
+                <span className="text-gray-600">문의전화</span>
+                <a 
+                  href={`tel:${spot.contact.phone}`} 
+                  className="text-brand-primary hover:underline"
+                >
+                  {spot.contact.phone}
+                </a>
+              </div>
+            )}
           </div>
-        )}
+        </div>
       </div>
 
-      {/* 하단 액션 버튼들 */}
-      <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 p-4 flex gap-3 z-10">
-        <button className="flex-1 bg-brand-primary text-white py-3 rounded-lg font-medium hover:bg-green-600 transition-colors">
-          예약하기
-        </button>
-        <button className="px-4 py-3 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors">
-          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-          </svg>
-        </button>
-        <button className="px-4 py-3 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors">
-          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z" />
-          </svg>
+      {/* 하단 고정 버튼 */}
+      <div className="sticky bottom-0 bg-white border-t border-gray-200 p-4">
+        <button className="w-full bg-brand-primary text-white py-4 rounded-lg font-medium text-lg hover:bg-green-600 transition-colors">
+          방문 인증하고 배지 획득하기
         </button>
       </div>
-
-      {/* 하단 여백 추가 */}
-      <div className="h-24"></div>
     </div>
   );
 }
