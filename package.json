@@ -11,26 +11,31 @@
   "dependencies": {
     "autoprefixer": "^10.4.21",
     "axios": "^1.9.0",
+    "clsx": "^2.1.1",
+    "lucide-react": "^0.511.0",
     "next": "15.3.2",
     "next-pwa": "^5.6.0",
     "postcss": "^8.5.3",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "tailwind-merge": "^3.3.0",
-    "tailwindcss": "^4.1.7",
-    "zustand": "^5.0.4"
+    "tailwindcss": "^3.4.17",
+    "zustand": "^5.0.5"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
     "@tailwindcss/nesting": "^0.0.0-insiders.565cd3e",
     "@types/next-pwa": "^5.6.9",
-    "@types/node": "^20",
+    "@types/node": "^20.17.50",
     "@types/postcss-load-config": "^2.0.1",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "@types/serviceworker": "^0.0.135",
     "eslint": "^9",
     "eslint-config-next": "15.3.2",
     "postcss-import": "^16.1.0",
+    "prettier": "^3.5.3",
+    "prettier-plugin-tailwindcss": "^0.6.11",
     "typescript": "^5"
   }
 }
