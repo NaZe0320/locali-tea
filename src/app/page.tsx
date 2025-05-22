@@ -85,13 +85,13 @@ export default function Home() {
         {/* 페이지 이동 버튼 */}
         <div className="flex flex-col sm:flex-row gap-4 mt-8">
           <Link href="/design-system" className="w-full sm:w-auto">
-            <button className="w-full bg-primary hover:bg-green-600 text-white font-medium py-3 px-6 rounded-lg transition-colors duration-200 shadow-sm">
+            <button className="w-full bg-brand-primary hover:bg-green-600 text-white font-medium py-3 px-6 rounded-lg transition-colors duration-200 shadow-sm">
               디자인 시스템 보기
             </button>
           </Link>
           
           <Link href="/main" className="w-full sm:w-auto">
-            <button className="w-full bg-secondary hover:bg-red-400 text-white font-medium py-3 px-6 rounded-lg transition-colors duration-200 shadow-sm">
+            <button className="w-full bg-brand-secondary hover:bg-red-400 text-white font-medium py-3 px-6 rounded-lg transition-colors duration-200 shadow-sm">
               메인 페이지로 이동
             </button>
           </Link>
