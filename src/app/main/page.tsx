@@ -37,18 +37,19 @@ export default function Main() {
   return (
     <div className="px-4 py-6">
       {/* 차BTI 테스트 배너 */}
-      <div className="mb-6 rounded-xl overflow-hidden shadow-sm" style={{
-        background: 'linear-gradient(to right, #e8f5e9, #ffebee)'
-      }}>
-        <div className="p-6">
-          <h2 className="text-xl font-bold mb-2">나에게 맞는 차는?</h2>
-          <p className="text-sm mb-4">차BTI 테스트로 알아보는 나의 차 유형</p>
-          <button className="bg-white text-brand-primary px-4 py-2 rounded-full font-medium text-sm shadow-sm hover:bg-gray-50 transition-colors">
-            테스트 시작하기
-          </button>
+      <Link href="/tea-bti">
+        <div className="mb-6 rounded-xl overflow-hidden shadow-sm" style={{
+          background: 'linear-gradient(to right, #e8f5e9, #ffebee)'
+        }}>
+          <div className="p-6">
+            <h2 className="text-xl font-bold mb-2">나에게 맞는 차는?</h2>
+            <p className="text-sm mb-4">차BTI 테스트로 알아보는 나의 차 유형</p>
+            <button className="bg-white text-brand-primary px-4 py-2 rounded-full font-medium text-sm shadow-sm hover:bg-gray-50 transition-colors">
+              테스트 시작하기
+            </button>
+          </div>
         </div>
-      </div>
-      
+      </Link>
       {/* 시즌별 인기 차 관광지 */}
       <section className="mb-6">
         <div className="flex items-center justify-between mb-3">
