@@ -6,11 +6,13 @@ import { useIsDesktop } from '../../hooks/useMediaQuery';
 interface ResponsiveLayoutProps {
   children: React.ReactNode;
   header?: React.ReactNode;
+  footer?: React.ReactNode;
 }
 
 export const ResponsiveLayout: React.FC<ResponsiveLayoutProps> = ({
   children,
   header,
+  footer,
 }) => {
   const isDesktop = useIsDesktop();
   
@@ -29,6 +31,11 @@ export const ResponsiveLayout: React.FC<ResponsiveLayoutProps> = ({
       `}>
         {children}
       </main>
+      {footer && (
+        <footer className="fixed bottom-0 left-0 w-full z-50 bg-white shadow-t">
+          {footer}
+        </footer>
+      )}
     </div>
   );
 };
