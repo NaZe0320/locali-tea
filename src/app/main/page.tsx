@@ -34,7 +34,7 @@ export default function Main() {
     };
 
     loadPopularSpots();
-  }, []);
+  }, [useCases.getPopularTouristSpotsUseCase]);
 
   return (
     <ResponsiveLayout

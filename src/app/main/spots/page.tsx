@@ -40,7 +40,7 @@ export default function TouristSpotsListPage() {
     };
 
     loadSpots();
-  }, []);
+  }, [getTouristSpotsUseCase]);
 
   return (
     <ResponsiveLayout

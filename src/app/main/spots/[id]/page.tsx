@@ -63,7 +63,7 @@ export default function TouristSpotDetailPage() {
     };
 
     loadSpotDetail();
-  }, [spotId]);
+  }, [spotId, getTouristSpotByIdUseCase]);
 
   // 로딩 상태
   if (loading) {
