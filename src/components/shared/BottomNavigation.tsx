@@ -139,6 +139,7 @@ export const BottomNavigation: React.FC<BottomNavigationProps> = ({
             <Link 
               key={item.id} 
               href={item.href}
+              replace
               className="flex flex-col items-center justify-center py-2 px-1 min-w-0 flex-1 transition-colors"
             >
               <div className="mb-1">
