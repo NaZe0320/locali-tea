@@ -1,27 +1,12 @@
 ﻿'use client'
 
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import Link from 'next/link';
 import ResponsiveLayout from '../components/layouts/ResponsiveLayout';
+import { useIsDesktop } from '../hooks/useMediaQuery';
 
 export default function Home() {
-  const [isMobile, setIsMobile] = useState(false);
-  
-  useEffect(() => {
-    // 모바일 장치 감지 함수
-    const checkIfMobile = () => {
-      setIsMobile(window.innerWidth < 1024);
-    };
-    
-    // 초기 로드 시 장치 확인
-    checkIfMobile();
-    
-    // 화면 크기 변경 시 장치 타입 재확인
-    window.addEventListener('resize', checkIfMobile);
-    
-    // 컴포넌트 언마운트 시 이벤트 리스너 제거
-    return () => window.removeEventListener('resize', checkIfMobile);
-  }, []);
+  const isDesktop = useIsDesktop();
 
   return (
     <ResponsiveLayout
@@ -38,7 +23,7 @@ export default function Home() {
         </p>
         
         {/* 장치 유형에 따라 적절한 메시지만 표시 */}
-        {isMobile ? (
+        {!isDesktop ? (
           <div className="p-4 bg-white rounded-lg shadow-sm border border-gray-200 mb-6">
             <div className="flex items-start space-x-3">
               <div>
@@ -74,7 +59,9 @@ export default function Home() {
           </div>
           
           <div className="bg-gradient-to-r from-red-50 to-pink-50 p-6 rounded-xl border border-red-100">
-
+            <div className="flex items-center mb-3">
+              <h3 className="font-bold text-gray-800">AI 맞춤 추천</h3>
+            </div>
             <p className="text-sm text-gray-600">
               당신의 취향에 맞는 차와 여행 코스를 AI가 추천해드립니다.
             </p>
