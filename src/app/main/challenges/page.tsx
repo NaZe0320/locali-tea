@@ -75,20 +75,20 @@ export default function ChallengesPage() {
                   {challenge.daysLeft}일 남음
                 </span>
               </div>
-              
+
               <div className="mb-3">
                 <div className="flex items-center justify-between text-sm mb-1">
                   <span className="text-gray-600">진행도</span>
                   <span className="font-medium">{challenge.progress}/{challenge.total}</span>
                 </div>
                 <div className="w-full bg-gray-200 rounded-full h-2">
-                  <div 
+                  <div
                     className="bg-brand-primary h-2 rounded-full transition-all duration-300"
                     style={{ width: `${(challenge.progress / challenge.total) * 100}%` }}
                   />
                 </div>
               </div>
-              
+
               <div className="flex items-center justify-between">
                 <div className="flex items-center text-sm text-gray-600">
                   <span className="mr-1">🏆</span>
@@ -137,7 +137,7 @@ export default function ChallengesPage() {
                   <p className="text-sm text-gray-600 mb-2">{challenge.description}</p>
                   <div className="flex items-center gap-4 text-xs text-gray-500">
                     <span className={`px-2 py-1 rounded-full ${
-                      challenge.difficulty === '쉬움' 
+                      challenge.difficulty === '쉬움'
                         ? 'bg-green-100 text-green-600'
                         : challenge.difficulty === '보통'
                         ? 'bg-yellow-100 text-yellow-600'
@@ -149,7 +149,7 @@ export default function ChallengesPage() {
                   </div>
                 </div>
               </div>
-              
+
               <div className="flex items-center justify-between">
                 <div className="flex items-center text-sm text-gray-600">
                   <span className="mr-1">🏆</span>
