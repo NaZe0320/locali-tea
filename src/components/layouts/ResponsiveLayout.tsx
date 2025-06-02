@@ -1,8 +1,6 @@
 'use client'
 
 import React from 'react';
-import MobileLayout from './MobileLayout';
-import DesktopLayout from './DesktopLayout';
 import { useIsDesktop } from '../../hooks/useMediaQuery';
 
 interface ResponsiveLayoutProps {
@@ -16,18 +14,22 @@ export const ResponsiveLayout: React.FC<ResponsiveLayoutProps> = ({
 }) => {
   const isDesktop = useIsDesktop();
   
-  if (isDesktop) {
-    return (
-      <DesktopLayout  >
-        {children}
-      </DesktopLayout>
-    );
-  }
-  
   return (
-    <MobileLayout header={header}>
-      {children}
-    </MobileLayout>
+    <div className={`min-h-screen ${isDesktop ? 'desktop-layout' : 'mobile-layout'}`}>
+      {header && (
+        <header className="sticky top-0 z-50 bg-white shadow-sm">
+          {header}
+        </header>
+      )}
+      <main className={`
+        ${isDesktop 
+          ? 'max-w-7xl mx-auto px-4 sm:px-6 lg:px-8' 
+          : 'px-4 pb-16'
+        }
+      `}>
+        {children}
+      </main>
+    </div>
   );
 };
 
