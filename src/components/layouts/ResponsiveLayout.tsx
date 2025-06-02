@@ -1,6 +1,7 @@
 'use client'
 
 import React from 'react';
+import AppShell from './AppShell';
 import { useIsDesktop } from '../../hooks/useMediaQuery';
 
 interface ResponsiveLayoutProps {
